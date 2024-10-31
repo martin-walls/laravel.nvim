@@ -15,9 +15,14 @@ function artisan:new(api, env)
 end
 
 function artisan:info()
-  return self.api:send("artisan", { "about", "--json" }):thenCall(function(response)
-    return response:json()
-  end)
+  return self.api
+    :send("artisan", { "about", "--json" })
+    :thenCall(function(response)
+      return response:json()
+    end)
+    :catch(function()
+      -- ignore error
+    end)
 end
 
 return artisan
